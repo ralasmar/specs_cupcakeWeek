@@ -91,11 +91,12 @@ public class Main {
 
 
         //add each cupcake object to the cupcakeMenu arraylist
-        ((ArrayList<Cupcake>) cupcakeMenu).add(cupcake);
-        ((ArrayList<Cupcake>) cupcakeMenu).add(redVelvet);
-        ((ArrayList<Cupcake>) cupcakeMenu).add(chocolate);
+        cupcakeMenu.add(cupcake);
+        cupcakeMenu.add(redVelvet);
+        cupcakeMenu.add(chocolate);
         drinkMenu.add(water);
         drinkMenu.add(soda);
         drinkMenu.add(milk);
+        new Order(cupcakeMenu, drinkMenu);
     }
 }
