@@ -1,7 +1,11 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 public class Order{
     //public constructor function with the parameters: ArrayList of Cupcake and ArrayList of Drink
@@ -78,18 +82,119 @@ public class Order{
                 } else {
                     System.out.println("Sorry we don't have that on the menu.");
                     }
-                }
+
             //check if user wants to keep ordering
                 System.out.println("Would you like to continue ordering? (Y/N)");
                 placeOrder = input.nextLine();
-                if(!placeOrder.equalsIgnoreCase("Y")){
+                if(!placeOrder.equalsIgnoreCase("Y")) {
                     ordering = false;
+                }
             }
+            //generate a receipt of all items the customer ordered
+            System.out.println(order.get(0));
+            System.out.println(order.get(1));
+            //create double variable named subtotal
+            double subtotal = 0.0;
+            //for loop that starts at i = 2, incrementing by 1, while i is less than order size
+            for (int i = 2; i<order.size(); i++){
+                //check if order at i is equal to cupcakeMenu at 0
+                if(order.get(i) == cupcakeMenu.get(0)){
+                    //run type method on value
+                    cupcakeMenu.get(0).type();
+                    //print price of cupcake
+                    System.out.println(cupcakeMenu.get(0).getPrice());
+                    //set subtotal = to subtotal plus cupcake price
+                    subtotal += cupcakeMenu.get(0).getPrice();
+                } else if(order.get(i) == cupcakeMenu.get(1)){
+                    //run type method on value
+                    cupcakeMenu.get(1).type();
+                    //print price of cupcake
+                    System.out.println(cupcakeMenu.get(1).getPrice());
+                    //set subtotal = to subtotal plus cupcake price
+                    subtotal += cupcakeMenu.get(1).getPrice();
+                } else if(order.get(i) == cupcakeMenu.get(2)){
+                    //run type method on value
+                    cupcakeMenu.get(2).type();
+                    //print price of cupcake
+                    System.out.println(cupcakeMenu.get(2).getPrice());
+                    //set subtotal = to subtotal plus cupcake price
+                    subtotal += cupcakeMenu.get(2).getPrice();
+                } else if(order.get(i) == drinkMenu.get(0)){
+                    //run type method on value
+                    drinkMenu.get(0).type();
+                    //print price of drink
+                    System.out.println(drinkMenu.get(0).getPrice());
+                    //set subtotal = to subtotal plus drink price
+                    subtotal += drinkMenu.get(0).getPrice();
+                } else if(order.get(i) == drinkMenu.get(1)){
+                    //run type method on value
+                    drinkMenu.get(1).type();
+                    //print price of drink
+                    System.out.println(drinkMenu.get(1).getPrice());
+                    //set subtotal = to subtotal plus drink price
+                    subtotal += drinkMenu.get(0).getPrice();
+                } else if(order.get(i) == drinkMenu.get(2)){
+                    //run type method on value
+                    drinkMenu.get(2).type();
+                    //print price of drink
+                    System.out.println(drinkMenu.get(2).getPrice());
+                    //set subtotal = to subtotal plus drink price
+                    subtotal += drinkMenu.get(2).getPrice();
+                }
+                System.out.println("subtotal: " + subtotal);
+            }
+            //call constructor functions for CreateFile class and WriteToFileClass
+            new CreateFile();
+            new WriteToFile(order);
 
 
         } else {
             System.out.println("Have a nice day then");
         }
 
+    }
+    //createFile class
+    public static class CreateFile{
+        //create a public constructor function
+        public CreateFile() {
+            //try catch block with parameter of IOException e
+            try {
+                //create a file object named salesData
+                File salesData = new File("salesData.txt");
+                if (salesData.createNewFile()) {
+                    //if file is created print the name
+                    System.out.println("File created: " + salesData.getName());
+                } else {
+                    System.out.println("File already exists");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred");
+            }
+
+        }
+    }
+    //create a class named WriteToFile
+    public static class WriteToFile{
+        //public constructor function with parameter
+        public WriteToFile(ArrayList<Object> order){
+            try {
+                //new FileWriter object with parameters name and boolean
+                //boolean true is an option for appending to the file
+                FileWriter fw = new FileWriter("salesData.txt", true);
+                //new PrintWriter object with fw as parameter
+                PrintWriter salesWriter = new PrintWriter(fw);
+                //iterate through each element in order using a for loop to print the values
+                for (int i = 0; i< order.size(); i++){
+                    salesWriter.println(order.get(i));
+                }
+                //close salesWriter so it cannot continue to be run
+                salesWriter.close();
+                System.out.println("Successfully wrote to the file");
+            } catch (IOException e) {
+                System.out.println("An error occurred");
+            }
+
+
+        }
     }
 }
